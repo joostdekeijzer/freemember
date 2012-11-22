@@ -323,23 +323,25 @@ class Freemember
 		}
 
 		// custom member fields
-		foreach ($this->EE->freemember_model->member_custom_fields() as $field)
-		{
-			if ($member)
+		if( $this->EE->TMPL->fetch_param( 'disable' ) != 'custom_fields' ) {
+			foreach ($this->EE->freemember_model->member_custom_fields() as $field)
 			{
-				$field_id = 'm_field_id_'.$field->m_field_id;
-				$this->tag_vars[0][$field_id] = $member->$field_id;
-				$this->tag_vars[0][$field->m_field_name] = $member->$field_id;
-			}
-
-			if ('select' == $field->m_field_type)
-			{
-				$options = explode("\n", $field->m_field_list_items);
-				$this->_add_select_field($field->m_field_name, $options);
-			}
-			else
-			{
-				$this->_add_field($field->m_field_name);
+				if ($member)
+				{
+					$field_id = 'm_field_id_'.$field->m_field_id;
+					$this->tag_vars[0][$field_id] = $member->$field_id;
+					$this->tag_vars[0][$field->m_field_name] = $member->$field_id;
+				}
+	
+				if ('select' == $field->m_field_type)
+				{
+					$options = explode("\n", $field->m_field_list_items);
+					$this->_add_select_field($field->m_field_name, $options);
+				}
+				else
+				{
+					$this->_add_field($field->m_field_name);
+				}
 			}
 		}
 
