@@ -359,10 +359,15 @@ class Freemember
 	{
 		if (is_array($errors))
 		{
+			$this->tag_vars[0]['all_errors'] = array();
+
 			foreach ($errors as $key => $value)
 			{
 				$this->tag_vars[0]["error:$key"] = $this->EE->freemember->wrap_error($value);
+				$this->tag_vars[0]['all_errors'][] = array('error' => $value);
 			}
+		} else {
+			$this->tag_vars[0]['all_errors'] = array(array());
 		}
 	}
 
