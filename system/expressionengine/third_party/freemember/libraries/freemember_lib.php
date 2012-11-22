@@ -512,6 +512,10 @@ class Freemember_lib
 		// custom field rules
 		foreach ($this->EE->freemember_model->member_custom_fields() as $field)
 		{
+			if( $this->form_param( 'disable' ) == 'custom_fields' ) {
+				if( isset( $_POST[$field->m_field_name] ) ) unset( $_POST[$field->m_field_name] );
+				continue;
+			}
 			$field_rules = '';
 			if ($field->m_field_required == 'y')
 			{
